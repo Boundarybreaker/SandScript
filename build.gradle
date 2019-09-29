@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+}
+
+group 'com.hrznstudio.sandbox'
+version '1.0.0'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven {
+        name 'Horizon Maven'
+        url 'https://cdn.hrzn.studio/maven'
+    }
+}
+
+configurations.all {
+    resolutionStrategy.cacheDynamicVersionsFor 1, 'seconds'
+    resolutionStrategy.cacheChangingModulesFor 1, 'seconds'
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    runtime project(':Minecraft')
+    compile 'com.hrznstudio.sandbox:sandbox-api:0.2.+'
+}
