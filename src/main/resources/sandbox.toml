@@ -1,12 +1,10 @@
-modid="exampleaddon" # required `[a-z0-9-_]{4,15}`
-version="0.0.0" # required Semver Enforced!
-title="Example Addon" # optional DEFAULT: modid
-description="""
-Multiline Description
-"""  # optional DEFAULT: ""
-entrypoint="org.sandboxpowered.example.Example" # required
+modid="sandscript" # required `[a-z0-9-_]{4,15}`
+version="1.0.0" # required Semver Enforced!
+title="SandScript" # optional DEFAULT: modid
+description="Write addons in JSR223 languages."  # optional DEFAULT: ""
+entrypoint="space.bbkr.sandscript.SandScript" # required
 authors = [ # required 1
-    "Author",
+    "B0undarybreaker"
 ]
-url = "" # optional DEFAULT: ""
+url = "https://github.com/boundarybreaker/sandscript" # optional DEFAULT: ""
 side = "COMMON" # optional [SERVER, CLIENT, COMMON] DEFAULT: "COMMON"

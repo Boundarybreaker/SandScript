@@ -1,3 +1,14 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.github.jengelman.gradle.plugins:shadow:5.0.0"
+    }
+}
+
 plugins {
     id 'java'
 }
@@ -5,10 +16,13 @@ plugins {
 group 'com.hrznstudio.sandbox'
 version '1.0.0'
 
+apply plugin: "com.github.johnrengelman.shadow"
+
 sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven {
         name 'Horizon Maven'
         url 'https://cdn.hrzn.studio/maven'
@@ -20,8 +34,19 @@ configurations.all {
     resolutionStrategy.cacheChangingModulesFor 1, 'seconds'
 }
 
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     runtime project(':Minecraft')
     compile 'com.hrznstudio.sandbox:sandbox-api:0.2.+'
+    compileOnly group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+
+    //for some reason log4j isn't available to sandscript?
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.12.1'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.12.1'
+}
+
+jar {
+    from 'LICENSE'
+    archiveExtension = 'sbx'
 }
