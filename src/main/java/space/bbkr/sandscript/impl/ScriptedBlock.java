@@ -1,22 +1,20 @@
 package space.bbkr.sandscript.impl;
 
-import com.hrznstudio.sandbox.api.block.Block;
-import com.hrznstudio.sandbox.api.block.IBlock;
-import com.hrznstudio.sandbox.api.block.Material;
-import com.hrznstudio.sandbox.api.component.Component;
-import com.hrznstudio.sandbox.api.entity.IEntity;
-import com.hrznstudio.sandbox.api.entity.player.Hand;
-import com.hrznstudio.sandbox.api.entity.player.Player;
-import com.hrznstudio.sandbox.api.fluid.Fluids;
-import com.hrznstudio.sandbox.api.fluid.IFluid;
-import com.hrznstudio.sandbox.api.item.ItemStack;
-import com.hrznstudio.sandbox.api.state.BlockState;
-import com.hrznstudio.sandbox.api.state.StateFactory;
-import com.hrznstudio.sandbox.api.util.*;
-import com.hrznstudio.sandbox.api.util.math.Position;
-import com.hrznstudio.sandbox.api.util.math.Vec3f;
-import com.hrznstudio.sandbox.api.world.World;
-import com.hrznstudio.sandbox.api.world.WorldReader;
+import org.sandboxpowered.sandbox.api.block.BaseBlock;
+import org.sandboxpowered.sandbox.api.block.Block;
+import org.sandboxpowered.sandbox.api.block.Material;
+import org.sandboxpowered.sandbox.api.component.Component;
+import org.sandboxpowered.sandbox.api.entity.Entity;
+import org.sandboxpowered.sandbox.api.entity.player.Hand;
+import org.sandboxpowered.sandbox.api.entity.player.PlayerEntity;
+import org.sandboxpowered.sandbox.api.item.ItemStack;
+import org.sandboxpowered.sandbox.api.state.BlockState;
+import org.sandboxpowered.sandbox.api.state.StateFactory;
+import org.sandboxpowered.sandbox.api.util.*;
+import org.sandboxpowered.sandbox.api.util.math.Position;
+import org.sandboxpowered.sandbox.api.util.math.Vec3f;
+import org.sandboxpowered.sandbox.api.world.World;
+import org.sandboxpowered.sandbox.api.world.WorldReader;
 import space.bbkr.sandscript.ScriptManager;
 import space.bbkr.sandscript.helper.TextHelper;
 import space.bbkr.sandscript.util.ScriptLogger;
@@ -27,7 +25,7 @@ import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 
-public class ScriptedBlock extends Block {
+public class ScriptedBlock extends BaseBlock {
 	private Identity id;
 	private String script;
 	private ScriptEngine engine;
@@ -46,7 +44,7 @@ public class ScriptedBlock extends Block {
 	}
 
 	@Override
-	public InteractionResult onBlockUsed(World world, Position pos, BlockState state, Player player, Hand hand, Direction side, Vec3f hit) {
+	public InteractionResult onBlockUsed(World world, Position pos, BlockState state, PlayerEntity player, Hand hand, Direction side, Vec3f hit) {
 		try {
 			Object result = runner.invokeFunction("onBlockUsed", world, pos, state, player, hand, side, hit);
 			if (result instanceof InteractionResult) return (InteractionResult) result;
@@ -73,7 +71,7 @@ public class ScriptedBlock extends Block {
 	}
 
 	@Override
-	public InteractionResult onBlockClicked(World world, Position pos, BlockState state, Player player) {
+	public InteractionResult onBlockClicked(World world, Position pos, BlockState state, PlayerEntity player) {
 		try {
 			Object result = runner.invokeFunction("onBlockClicked", world, pos, state, player);
 			if (result instanceof InteractionResult) return (InteractionResult) result;
@@ -111,7 +109,7 @@ public class ScriptedBlock extends Block {
 	}
 
 	@Override
-	public void onBlockPlaced(World world, Position pos, BlockState state, IEntity placer, ItemStack stack) {
+	public void onBlockPlaced(World world, Position pos, BlockState state, Entity placer, ItemStack stack) {
 		try {
 			runner.invokeFunction("onBlockPlaced", world, pos, state, placer, stack);
 		} catch (ScriptException e) {
@@ -227,7 +225,7 @@ public class ScriptedBlock extends Block {
 	}
 
 	@Override
-	public void onEntityWalk(World world, Position pos, IEntity entity) {
+	public void onEntityWalk(World world, Position pos, Entity entity) {
 		try {
 			runner.invokeFunction("onEntityWalk", world, pos, entity);
 		} catch (ScriptException e) {
@@ -239,52 +237,7 @@ public class ScriptedBlock extends Block {
 	}
 
 	@Override
-	public boolean canContainFluid(WorldReader world, Position pos, BlockState state, IFluid fluid) {
-		try {
-			Object ret = runner.invokeFunction("canContainFluid", world, pos, state, fluid);
-			if (ret instanceof Boolean) return (Boolean)ret;
-			else throw new IllegalArgumentException("Bad return value for canContainFluid in " + id.toString() + ": must be a boolean");
-		} catch (ScriptException e) {
-			logger.error("Cannot calculate canContainFluid for %s: %s", id.toString(), e.getMessage());
-			return false;
-		} catch (NoSuchMethodException e) {
-			logger.debug("No function found for canContainFluid in %s, calling super", id.toString());
-			return super.canContainFluid(world, pos, state, fluid);
-		}
-	}
-
-	@Override
-	public boolean canContainFluids() {
-		try {
-			Object ret = runner.invokeFunction("canContainFluids");
-			if (ret instanceof Boolean) return (Boolean)ret;
-			else throw new IllegalArgumentException("Bad return value for canContainFluids in " + id.toString() + ": must be a boolean");
-		} catch (ScriptException e) {
-			logger.error("Cannot calculate canContainFluids for %s: %s", id.toString(), e.getMessage());
-			return false;
-		} catch (NoSuchMethodException e) {
-			logger.debug("No function found for canContainFluids in %s, calling super", id.toString());
-			return super.canContainFluids();
-		}
-	}
-
-	@Override
-	public IFluid drainFrom(World world, Position pos, BlockState state) {
-		try {
-			Object ret = runner.invokeFunction("drainFrom", world, pos, state);
-			if (ret instanceof IFluid) return (IFluid)ret;
-			else throw new IllegalArgumentException("Bad return value for drainFrom in " + id.toString() + ": must be an IFluid");
-		} catch (ScriptException e) {
-			logger.error("Cannot calculate drainFrom for %s: %s", id.toString(), e.getMessage());
-			return Fluids.EMPTY;
-		} catch (NoSuchMethodException e) {
-			logger.debug("No function found for drainFrom in %s, calling super", id.toString());
-			return super.drainFrom(world, pos, state);
-		}
-	}
-
-	@Override
-	public void appendProperties(StateFactory.Builder<IBlock, BlockState> builder) {
+	public void appendProperties(StateFactory.Builder<Block, BlockState> builder) {
 		super.appendProperties(builder);
 		try {
 			runner.invokeFunction("appendProperties", builder);

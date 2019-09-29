@@ -1,30 +1,32 @@
 package space.bbkr.sandscript.impl;
 
-import com.hrznstudio.sandbox.api.Registries;
-import com.hrznstudio.sandbox.api.block.Block;
-import com.hrznstudio.sandbox.api.block.FluidBlock;
-import com.hrznstudio.sandbox.api.block.IBlock;
-import com.hrznstudio.sandbox.api.block.Material;
-import com.hrznstudio.sandbox.api.fluid.Fluid;
-import com.hrznstudio.sandbox.api.fluid.IFluid;
-import com.hrznstudio.sandbox.api.item.BucketItem;
-import com.hrznstudio.sandbox.api.item.IItem;
-import com.hrznstudio.sandbox.api.item.Item;
-import com.hrznstudio.sandbox.api.state.BlockState;
-import com.hrznstudio.sandbox.api.state.FluidState;
-import com.hrznstudio.sandbox.api.state.Properties;
-import com.hrznstudio.sandbox.api.state.StateFactory;
-import com.hrznstudio.sandbox.api.util.Identity;
+import org.sandboxpowered.sandbox.api.Registries;
+import org.sandboxpowered.sandbox.api.block.Block;
+import org.sandboxpowered.sandbox.api.block.FluidBlock;
+import org.sandboxpowered.sandbox.api.block.Material;
+import org.sandboxpowered.sandbox.api.fluid.BaseFluid;
+import org.sandboxpowered.sandbox.api.fluid.Fluid;
+import org.sandboxpowered.sandbox.api.item.BucketItem;
+import org.sandboxpowered.sandbox.api.item.Item;
+import org.sandboxpowered.sandbox.api.state.BlockState;
+import org.sandboxpowered.sandbox.api.state.FluidState;
+import org.sandboxpowered.sandbox.api.state.Properties;
+import org.sandboxpowered.sandbox.api.state.StateFactory;
+import org.sandboxpowered.sandbox.api.util.Identity;
 
 import java.util.function.Supplier;
 
-public class SimpleFluid extends Fluid {
+public class SimpleFluid extends BaseFluid {
 	protected Identity id;
-	protected IFluid flowing;
-	protected IBlock block;
-	protected IItem bucket;
+	protected Fluid flowing;
+	protected Block block;
+	protected Item bucket;
 
 	private boolean isInfinite;
+
+	public SimpleFluid(Identity id, boolean isInfinite) {
+		this(id, isInfinite, true);
+	}
 
 	public SimpleFluid(Identity id, boolean isInfinite, boolean isBase) {
 		this.id = id;
@@ -58,16 +60,16 @@ public class SimpleFluid extends Fluid {
 	}
 
 	@Override
-	public IFluid asStill() {
+	public Fluid asStill() {
 		return this;
 	}
 
 	@Override
-	public IFluid asFlowing() {
+	public Fluid asFlowing() {
 		return flowing;
 	}
 
-	Supplier<IFluid> getFlowing() {
+	Supplier<Fluid> getFlowing() {
 		return () -> new Flowing(id, isInfinite);
 	}
 
@@ -77,12 +79,11 @@ public class SimpleFluid extends Fluid {
 	}
 
 	@Override
-	public IItem asItem() {
+	public Item asBucket() {
 		return bucket;
 	}
 
-
-	public class Flowing extends SimpleFluid {
+	public static class Flowing extends SimpleFluid {
 		public Flowing(Identity id, boolean isInfinite) {
 			super(id, isInfinite, false);
 		}
@@ -93,7 +94,7 @@ public class SimpleFluid extends Fluid {
 		}
 
 		@Override
-		public void appendProperties(StateFactory.Builder<IFluid, FluidState> builder) {
+		public void appendProperties(StateFactory.Builder<Fluid, FluidState> builder) {
 			super.appendProperties(builder);
 			builder.add(Properties.FLUID_LEVEL);
 		}

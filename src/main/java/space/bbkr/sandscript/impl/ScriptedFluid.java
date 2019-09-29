@@ -1,20 +1,20 @@
 package space.bbkr.sandscript.impl;
 
-import com.hrznstudio.sandbox.api.Registries;
-import com.hrznstudio.sandbox.api.block.Block;
-import com.hrznstudio.sandbox.api.block.FluidBlock;
-import com.hrznstudio.sandbox.api.block.IBlock;
-import com.hrznstudio.sandbox.api.block.Material;
-import com.hrznstudio.sandbox.api.fluid.Fluid;
-import com.hrznstudio.sandbox.api.fluid.IFluid;
-import com.hrznstudio.sandbox.api.item.BucketItem;
-import com.hrznstudio.sandbox.api.item.IItem;
-import com.hrznstudio.sandbox.api.item.Item;
-import com.hrznstudio.sandbox.api.state.BlockState;
-import com.hrznstudio.sandbox.api.state.FluidState;
-import com.hrznstudio.sandbox.api.state.Properties;
-import com.hrznstudio.sandbox.api.state.StateFactory;
-import com.hrznstudio.sandbox.api.util.Identity;
+import org.sandboxpowered.sandbox.api.Registries;
+import org.sandboxpowered.sandbox.api.block.Block;
+import org.sandboxpowered.sandbox.api.block.FluidBlock;
+import org.sandboxpowered.sandbox.api.block.Block;
+import org.sandboxpowered.sandbox.api.block.Material;
+import org.sandboxpowered.sandbox.api.fluid.Fluid;
+import org.sandboxpowered.sandbox.api.fluid.Fluid;
+import org.sandboxpowered.sandbox.api.item.BucketItem;
+import org.sandboxpowered.sandbox.api.item.Item;
+import org.sandboxpowered.sandbox.api.item.Item;
+import org.sandboxpowered.sandbox.api.state.BlockState;
+import org.sandboxpowered.sandbox.api.state.FluidState;
+import org.sandboxpowered.sandbox.api.state.Properties;
+import org.sandboxpowered.sandbox.api.state.StateFactory;
+import org.sandboxpowered.sandbox.api.util.Identity;
 import space.bbkr.sandscript.ScriptManager;
 import space.bbkr.sandscript.util.ScriptLogger;
 import space.bbkr.sandscript.util.ScriptStorage;
@@ -46,7 +46,7 @@ public class ScriptedFluid extends SimpleFluid {
 		this.logger = new ScriptLogger(id.getNamespace());
 	}
 
-	Supplier<IFluid> getFlowing() {
+	Supplier<Fluid> getFlowing() {
 		return () -> new Flowing(id, scriptId, this);
 	}
 
@@ -84,9 +84,9 @@ public class ScriptedFluid extends SimpleFluid {
 		}
 	}
 
-	public class Flowing extends ScriptedFluid {
-		private IFluid parent;
-		public Flowing(Identity id, Identity scriptId, IFluid parent) {
+	public static class Flowing extends ScriptedFluid {
+		private Fluid parent;
+		public Flowing(Identity id, Identity scriptId, Fluid parent) {
 			super(id, scriptId, false);
 			this.parent = parent;
 		}
@@ -102,7 +102,7 @@ public class ScriptedFluid extends SimpleFluid {
 		}
 
 		@Override
-		public void appendProperties(StateFactory.Builder<IFluid, FluidState> builder) {
+		public void appendProperties(StateFactory.Builder<Fluid, FluidState> builder) {
 			super.appendProperties(builder);
 			builder.add(Properties.FLUID_LEVEL);
 		}

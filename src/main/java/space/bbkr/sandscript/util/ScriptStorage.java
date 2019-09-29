@@ -1,6 +1,6 @@
 package space.bbkr.sandscript.util;
 
-import com.hrznstudio.sandbox.api.util.Identity;
+import org.sandboxpowered.sandbox.api.util.Identity;
 
 import java.util.HashMap;
 import java.util.Map;

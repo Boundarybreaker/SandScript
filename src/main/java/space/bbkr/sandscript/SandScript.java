@@ -1,8 +1,8 @@
 package space.bbkr.sandscript;
 
-import com.hrznstudio.sandbox.api.SandboxAPI;
-import com.hrznstudio.sandbox.api.addon.Addon;
-import com.hrznstudio.sandbox.api.util.Identity;
+import org.sandboxpowered.sandbox.api.SandboxAPI;
+import org.sandboxpowered.sandbox.api.addon.Addon;
+import org.sandboxpowered.sandbox.api.util.Identity;
 import space.bbkr.sandscript.helper.EventHelper;
 import space.bbkr.sandscript.helper.RegistryHelper;
 import space.bbkr.sandscript.makers.BlockMaker;

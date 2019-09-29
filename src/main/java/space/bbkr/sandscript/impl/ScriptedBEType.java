@@ -1,11 +1,11 @@
 package space.bbkr.sandscript.impl;
 
-import com.hrznstudio.sandbox.api.Registries;
-import com.hrznstudio.sandbox.api.block.IBlock;
-import com.hrznstudio.sandbox.api.block.Material;
-import com.hrznstudio.sandbox.api.block.entity.BlockEntity;
-import com.hrznstudio.sandbox.api.block.entity.IBlockEntity;
-import com.hrznstudio.sandbox.api.util.Identity;
+import org.sandboxpowered.sandbox.api.Registries;
+import org.sandboxpowered.sandbox.api.block.Block;
+import org.sandboxpowered.sandbox.api.block.Material;
+import org.sandboxpowered.sandbox.api.block.entity.BlockEntity;
+import org.sandboxpowered.sandbox.api.block.entity.BlockEntity;
+import org.sandboxpowered.sandbox.api.util.Identity;
 import space.bbkr.sandscript.ScriptManager;
 import space.bbkr.sandscript.helper.TextHelper;
 import space.bbkr.sandscript.util.ScriptIdentity;
@@ -38,10 +38,10 @@ public class ScriptedBEType {
 		this.logger = new ScriptLogger(id.getNamespace());
 	}
 
-	public IBlockEntity build() {
+	public BlockEntity build() {
 		try {
 			Object result = runner.invokeFunction("build");
-			if (result instanceof IBlockEntity) return (IBlockEntity)result;
+			if (result instanceof BlockEntity) return (BlockEntity)result;
 			else throw new IllegalArgumentException("Bad return value for build in " + id.toString() + ": must be a block entity");
 		} catch (ScriptException e) {
 			logger.error("Cannot calculate build for %s: %s", id.toString(), e.getMessage());
@@ -52,31 +52,31 @@ public class ScriptedBEType {
 		}
 	}
 
-	public IBlock[] getValidBlocks() {
-		List<IBlock> ret;
+	public Block[] getValidBlocks() {
+		List<Block> ret;
 		try {
 			Object result = runner.invokeFunction("getValidBlocks");
-			if (result instanceof IBlock[]) ret = Arrays.asList((IBlock[])result);
+			if (result instanceof Block[]) ret = Arrays.asList((Block[])result);
 			else if (result instanceof String[]) {
 				ret = new ArrayList<>();
 				for (String block : (String[])result) {
-					ret.add(Registries.BLOCK.get(ScriptIdentity.of(block)));
+					ret.add(Registries.BLOCK.get(ScriptIdentity.of(block)).get());
 				}
 			} else throw new IllegalArgumentException("Bad return value for getValidBlocks in " + id.toString() + ": must be an array of Blocks or Strings");
 		} catch (ScriptException e) {
 			logger.error("Cannot calculate getValidBlocks for %s: %s", id.toString(), e.getMessage());
-			return new IBlock[]{};
+			return new Block[]{};
 		} catch (NoSuchMethodException e) {
 			logger.debug("No function found for getValidBlocks in %s, returning empty list", id.toString());
-			return new IBlock[]{};
+			return new Block[]{};
 		}
-		return ret.toArray(new IBlock[]{});
+		return ret.toArray(new Block[]{});
 	}
 
-	public <T extends IBlockEntity> IBlockEntity.Type<T> getType() {
+	public <T extends BlockEntity> BlockEntity.Type<T> getType() {
 		Supplier supplier = this::build;
-		IBlock[] validBlocks = getValidBlocks();
-		return IBlockEntity.Type.of(supplier, validBlocks);
+		Block[] validBlocks = getValidBlocks();
+		return BlockEntity.Type.of(supplier, validBlocks);
 	}
 
 	private ScriptEngine init() {

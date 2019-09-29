@@ -1,15 +1,14 @@
 package space.bbkr.sandscript.impl;
 
-import com.hrznstudio.sandbox.api.block.IBlock;
-import com.hrznstudio.sandbox.api.component.Component;
-import com.hrznstudio.sandbox.api.item.Item;
-import com.hrznstudio.sandbox.api.item.ItemStack;
-import com.hrznstudio.sandbox.api.util.Identity;
-import com.hrznstudio.sandbox.api.util.InteractionResult;
-import com.hrznstudio.sandbox.api.util.Mono;
-import com.hrznstudio.sandbox.api.util.math.Position;
-import com.hrznstudio.sandbox.api.util.text.Text;
-import com.hrznstudio.sandbox.api.world.World;
+import org.sandboxpowered.sandbox.api.component.Component;
+import org.sandboxpowered.sandbox.api.item.BaseItem;
+import org.sandboxpowered.sandbox.api.item.ItemStack;
+import org.sandboxpowered.sandbox.api.util.Identity;
+import org.sandboxpowered.sandbox.api.util.InteractionResult;
+import org.sandboxpowered.sandbox.api.util.Mono;
+import org.sandboxpowered.sandbox.api.util.math.Position;
+import org.sandboxpowered.sandbox.api.util.text.Text;
+import org.sandboxpowered.sandbox.api.world.World;
 import space.bbkr.sandscript.ScriptManager;
 import space.bbkr.sandscript.helper.TextHelper;
 import space.bbkr.sandscript.util.ScriptLogger;
@@ -22,7 +21,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 import java.util.List;
 
-public class ScriptedItem extends Item {
+public class ScriptedItem extends BaseItem {
 	private Identity id;
 	private String script;
 	private ScriptEngine engine;

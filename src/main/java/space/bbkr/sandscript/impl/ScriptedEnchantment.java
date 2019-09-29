@@ -1,8 +1,8 @@
 package space.bbkr.sandscript.impl;
 
-import com.hrznstudio.sandbox.api.enchant.Enchantment;
-import com.hrznstudio.sandbox.api.item.ItemStack;
-import com.hrznstudio.sandbox.api.util.Identity;
+import org.sandboxpowered.sandbox.api.item.ItemStack;
+import org.sandboxpowered.sandbox.api.util.Identity;
+import org.sandboxpowered.sandbox.api.enchant.BaseEnchantment;
 import space.bbkr.sandscript.ScriptManager;
 import space.bbkr.sandscript.util.ScriptLogger;
 import space.bbkr.sandscript.util.ScriptStorage;
@@ -12,7 +12,7 @@ import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 
-public class ScriptedEnchantment extends Enchantment {
+public class ScriptedEnchantment extends BaseEnchantment {
 	private Identity id;
 	private String script;
 	private ScriptEngine engine;

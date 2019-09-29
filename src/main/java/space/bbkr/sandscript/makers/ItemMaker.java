@@ -1,8 +1,8 @@
 package space.bbkr.sandscript.makers;
 
-import com.hrznstudio.sandbox.api.block.Block;
-import com.hrznstudio.sandbox.api.item.BlockItem;
-import com.hrznstudio.sandbox.api.item.Item;
+import org.sandboxpowered.sandbox.api.block.BaseBlock;
+import org.sandboxpowered.sandbox.api.item.BaseBlockItem;
+import org.sandboxpowered.sandbox.api.item.BaseItem;
 
 /**
  * Util class for making items from script packs.
@@ -10,19 +10,19 @@ import com.hrznstudio.sandbox.api.item.Item;
 public class ItemMaker {
 	public static final ItemMaker INSTANCE = new ItemMaker();
 
-	public Item of() {
-		return new Item(new Item.Settings());
+	public BaseItem of() {
+		return new BaseItem(new BaseItem.Settings());
 	}
 
-	public Item of(Item.Settings settings) {
-		return new Item(settings);
+	public BaseItem of(BaseItem.Settings settings) {
+		return new BaseItem(settings);
 	}
 
-	public Item ofBlock(Block block) {
-		return new BlockItem(block);
+	public BaseItem ofBlock(BaseBlock block) {
+		return new BaseBlockItem(block);
 	}
 
-	public Item.Settings Settings() {
-		return new Item.Settings();
+	public BaseItem.Settings Settings() {
+		return new BaseItem.Settings();
 	}
 }

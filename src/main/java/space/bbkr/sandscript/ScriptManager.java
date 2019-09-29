@@ -1,6 +1,6 @@
 package space.bbkr.sandscript;
 
-import com.hrznstudio.sandbox.api.util.Identity;
+import org.sandboxpowered.sandbox.api.util.Identity;
 import space.bbkr.sandscript.util.ScriptIdentity;
 import space.bbkr.sandscript.util.ScriptLogger;
 import space.bbkr.sandscript.util.ScriptStorage;

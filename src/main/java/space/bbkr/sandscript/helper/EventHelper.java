@@ -1,10 +1,10 @@
 package space.bbkr.sandscript.helper;
 
-import com.hrznstudio.sandbox.api.SandboxAPI;
-import com.hrznstudio.sandbox.api.event.*;
-import com.hrznstudio.sandbox.api.event.entity.LivingEvent;
-import com.hrznstudio.sandbox.api.event.entity.PlayerEvent;
-import com.hrznstudio.sandbox.api.util.Identity;
+import org.sandboxpowered.sandbox.api.SandboxAPI;
+import org.sandboxpowered.sandbox.api.event.*;
+import org.sandboxpowered.sandbox.api.event.entity.LivingEvent;
+import org.sandboxpowered.sandbox.api.event.entity.PlayerEvent;
+import org.sandboxpowered.sandbox.api.util.Identity;
 import space.bbkr.sandscript.ScriptManager;
 import space.bbkr.sandscript.util.ScriptIdentity;
 

@@ -1,20 +1,18 @@
 package space.bbkr.sandscript.helper;
 
 
-import com.hrznstudio.sandbox.api.Registries;
-import com.hrznstudio.sandbox.api.block.Block;
-import com.hrznstudio.sandbox.api.block.IBlock;
-import com.hrznstudio.sandbox.api.block.Material;
-import com.hrznstudio.sandbox.api.block.entity.IBlockEntity;
-import com.hrznstudio.sandbox.api.container.ContainerFactory;
-import com.hrznstudio.sandbox.api.enchant.Enchantment;
-import com.hrznstudio.sandbox.api.enchant.IEnchantment;
-import com.hrznstudio.sandbox.api.fluid.Fluid;
-import com.hrznstudio.sandbox.api.fluid.IFluid;
-import com.hrznstudio.sandbox.api.item.BlockItem;
-import com.hrznstudio.sandbox.api.item.IItem;
-import com.hrznstudio.sandbox.api.item.Item;
-import com.hrznstudio.sandbox.api.util.Identity;
+import org.sandboxpowered.sandbox.api.Registries;
+import org.sandboxpowered.sandbox.api.block.BaseBlock;
+import org.sandboxpowered.sandbox.api.block.Block;
+import org.sandboxpowered.sandbox.api.block.Material;
+import org.sandboxpowered.sandbox.api.block.entity.BlockEntity;
+import org.sandboxpowered.sandbox.api.container.ContainerFactory;
+import org.sandboxpowered.sandbox.api.enchant.Enchantment;
+import org.sandboxpowered.sandbox.api.fluid.Fluid;
+import org.sandboxpowered.sandbox.api.item.BaseBlockItem;
+import org.sandboxpowered.sandbox.api.item.BlockItem;
+import org.sandboxpowered.sandbox.api.item.Item;
+import org.sandboxpowered.sandbox.api.util.Identity;
 import space.bbkr.sandscript.ScriptManager;
 import space.bbkr.sandscript.impl.ScriptedBlock;
 import space.bbkr.sandscript.impl.ScriptedEnchantment;
@@ -39,12 +37,12 @@ public class RegistryHelper {
 	 * @param block The block to register.
 	 * @return The block that's been successfully registered.
 	 */
-	public IBlock block(String name, IBlock block) {
+	public Block block(String name, Block block) {
 		Registries.BLOCK.register(Identity.of(namespace, name), block);
 		return block;
 	}
 
-	public IBlock blockOf(String name, String material) {
+	public Block blockOf(String name, String material) {
 		List<Identity> scripts = ScriptManager.INSTANCE.getScriptsAt("block/" + name);
 		if (scripts.size() > 1) throw new IllegalArgumentException("Cannot have multiple script files for a block!");
 		if (scripts.size() == 0) throw new IllegalArgumentException("Could not find any scripts for block ID " + namespace + ":" + name + "!");
@@ -59,7 +57,7 @@ public class RegistryHelper {
 	 * @param item The item to register.
 	 * @return The block that's been successfully registered.
 	 */
-	public IItem item(String name, IItem item) {
+	public Item item(String name, Item item) {
 		Registries.ITEM.register(Identity.of(namespace, name), item);
 		return item;
 	}
@@ -69,14 +67,14 @@ public class RegistryHelper {
 	 * @param block The block to get an item for.
 	 * @return The item form of that block.
 	 */
-	public IItem itemOf(Block block) {
+	public Item itemOf(BaseBlock block) {
 		Identity id = Registries.BLOCK.getIdentity(block);
-		IItem item = new BlockItem(block);
+		Item item = new BaseBlockItem(block);
 		Registries.ITEM.register(id, item);
 		return item;
 	}
 
-	public IItem itemOf(String name, IItem.Settings settings) {
+	public Item itemOf(String name, Item.Settings settings) {
 		List<Identity> scripts = ScriptManager.INSTANCE.getScriptsAt("item/" + name);
 		if (scripts.size() > 1) throw new IllegalArgumentException("Cannot have multiple script files for an item!");
 		if (scripts.size() == 0) throw new IllegalArgumentException("Could not find any scripts for item ID " + namespace + ":" + name + "!");
@@ -90,12 +88,12 @@ public class RegistryHelper {
 	 * @param fluid The fluid to register.
 	 * @return The fluid that's been successfully registered.
 	 */
-	public IFluid fluid(String name, IFluid fluid) {
+	public Fluid fluid(String name, Fluid fluid) {
 		Registries.FLUID.register(Identity.of(namespace, name), fluid);
 		return fluid;
 	}
 
-	public IFluid fluidOf(String name) {
+	public Fluid fluidOf(String name) {
 		List<Identity> scripts = ScriptManager.INSTANCE.getScriptsAt("fluid/" + name);
 		if (scripts.size() > 1) throw new IllegalArgumentException("Cannot have multiple script files for a fluid!");
 		if (scripts.size() == 0) throw new IllegalArgumentException("Could not find any scripts for fluid ID " + namespace + ":" + name + "!");
@@ -111,7 +109,7 @@ public class RegistryHelper {
 	 * @param be The BE type to register.
 	 * @return The BE type that's been successfully registered.
 	 */
-	public IBlockEntity.Type blockEntity(String name, IBlockEntity.Type be) {
+	public BlockEntity.Type blockEntity(String name, BlockEntity.Type be) {
 		Registries.BLOCK_ENTITY.register(Identity.of(namespace, name), be);
 		return be;
 	}
@@ -122,12 +120,12 @@ public class RegistryHelper {
 	 * @param enchantment The enchantment to register.
 	 * @return The enchantment that's been successfully registered.
 	 */
-	public IEnchantment enchantment(String name, IEnchantment enchantment) {
+	public Enchantment enchantment(String name, Enchantment enchantment) {
 		Registries.ENCHANTMENT.register(Identity.of(namespace, name), enchantment);
 		return enchantment;
 	}
 
-	public IEnchantment enchantmentOf(String name) {
+	public Enchantment enchantmentOf(String name) {
 		List<Identity> scripts = ScriptManager.INSTANCE.getScriptsAt("enchantment/" + name);
 		if (scripts.size() > 1) throw new IllegalArgumentException("Cannot have multiple script files for a enchantment!");
 		if (scripts.size() == 0) throw new IllegalArgumentException("Could not find any scripts for enchantment ID " + namespace + ":" + name + "!");

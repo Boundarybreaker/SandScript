@@ -1,6 +1,6 @@
 package space.bbkr.sandscript.helper;
 
-import com.hrznstudio.sandbox.api.util.text.Text;
+import org.sandboxpowered.sandbox.api.util.text.Text;
 
 public class TextHelper {
 	public static final TextHelper INSTANCE = new TextHelper();
